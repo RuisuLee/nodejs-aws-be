@@ -4,48 +4,55 @@
     "title": "Chocolate macaron",
     "description": "Intense deep chocolate flavor",
     "price": 12,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/16/99/7d/16997de805e3850630be012d37677f7f.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
     "title": "Classic macaron",
     "description": "Classic light almond flavor",
     "price": 10,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/dd/e4/65/dde46520ecb7b007b6851b1bcd2914e0.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
     "title": "Lavender macaron",
     "description": "Flavored, spicy, seductive",
     "price": 15,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/ac/60/fc/ac60fc32ca11b5e42cdb74d45c01b726.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
     "title": "Lemon macaron",
     "description": "Bright rich taste with a slight sourness",
     "price": 13,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/07/59/05/075905507cb7e4ab2082063b7eb14d68.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a3",
     "title": "Mint macaron",
     "description": "Delightful with hints of freshness",
     "price": 15,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/40/3c/30/403c30387e9cfdf598519d73098d79c1.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a4",
     "title": "Orange macaron",
     "description": "A juicy orange in a new shape",
     "price": 13,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/34/8d/7f/348d7f3dc13ff488f26bd72d5befd902.jpg"
   },
   {
     "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a5",
     "title": "Strawberry macaron",
     "description": "Classic delicate flavor of ripe strawberries",
     "price": 12,
-    "count": 4
+    "count": 4,
+    "img": "https://i.pinimg.com/564x/bf/a0/de/bfa0de608f2342871d87ce7316d592f9.jpg"
   }
 ]
