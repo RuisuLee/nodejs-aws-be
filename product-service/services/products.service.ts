@@ -9,7 +9,7 @@ export class ProductsService {
 
   public getProductById(id) {
     return new Promise((resolve, reject) => {
-      const productById = products.filter(product => { return product.id === id })[0];
+      const productById = products.find(product => { return product.id === id });
       if (productById) {
         resolve(productById);
       } else {
