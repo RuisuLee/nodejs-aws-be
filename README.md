@@ -1,1 +1,1 @@
-# nodejs-aws-be
+# Backend part of Backery shop
