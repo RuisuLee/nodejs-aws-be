@@ -6,17 +6,26 @@ import { CORSHeaders } from '../services/constant.service';
 export const getProductsById: APIGatewayProxyHandler = async (event, _context) => {
   const productsService = new ProductsService();
   const { productId } = event.pathParameters;
+  console.log(`getProductsById lambda | query params product id: ${productId}`);
   try {
     const product = await productsService.getProductById(productId);
-    return {
-      statusCode: 200,
-      body: JSON.stringify(product),
-      headers: CORSHeaders
-    };
+    if (product.length === 0) {
+      return {
+        statusCode: 404,
+        body: 'Product not found',
+        headers: CORSHeaders
+      };
+    } else {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(product),
+        headers: CORSHeaders
+      };
+    }
   } catch (error) {
     return {
-      statusCode: 404,
-      body: JSON.stringify(error),
+      statusCode: 500,
+      body: 'Something went wrong',
       headers: CORSHeaders
     };
   }

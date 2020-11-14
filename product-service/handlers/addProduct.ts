@@ -3,14 +3,15 @@ import 'source-map-support/register';
 import { ProductsService } from '../services/products.service';
 import { CORSHeaders } from '../services/constant.service';
 
-export const getProductsList: APIGatewayProxyHandler = async (event, _context) => {
+export const addProduct: APIGatewayProxyHandler = async (event, _context) => {
   const productsService = new ProductsService();
-  console.log(`getProductsList lambda`);
   try {
-    const products = await productsService.getAllProducts();
+    const product = JSON.parse(event.body);
+    console.log(`addProduct lambda | body product: ${product}`);
+    await productsService.addProduct(product);
     return {
       statusCode: 200,
-      body: JSON.stringify(products),
+      body: '',
       headers: CORSHeaders
     };
   } catch (error) {
