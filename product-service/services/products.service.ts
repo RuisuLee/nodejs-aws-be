@@ -1,4 +1,3 @@
-import * as products from '../data/products.json';
 import { Client } from 'pg';
 import {
   SELECT_ALL_PRODUCTS_JOIN_WITH_COSTS,
