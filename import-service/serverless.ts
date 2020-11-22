@@ -29,6 +29,16 @@ const serverlessConfiguration: Serverless = {
         Effect: 'Allow',
         Action: ['s3:*'],
         Resource: ['arn:aws:s3:::cake-bakery-app-import-service/*']
+      },
+      {
+        Effect: "Allow",
+        Action: "sqs:*",
+        Resource: {
+          "Fn::GetAtt": [
+            "SQSQueue",
+            "Arn"
+          ]
+        }
       }
     ],
     region: 'eu-west-1',
@@ -38,7 +48,20 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      SQS_URL: {
+        Ref: "SQSQueue"
+      }
     },
+  },
+  resources: {
+    Resources: {
+      SQSQueue: {
+        Type: "AWS::SQS::Queue",
+        Properties: {
+          QueueName: 'catalogItemsQueue'
+        }
+      }
+    }
   },
   functions: {
     importProductsFile: {
