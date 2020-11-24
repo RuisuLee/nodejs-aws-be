@@ -33,12 +33,7 @@ const serverlessConfiguration: Serverless = {
       {
         Effect: "Allow",
         Action: "sqs:*",
-        Resource: {
-          "Fn::GetAtt": [
-            "SQSQueue",
-            "Arn"
-          ]
-        }
+        Resource: ['${cf:product-service-${self:provider.stage}.SQSQueueArn}']
       }
     ],
     region: 'eu-west-1',
@@ -48,20 +43,8 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      SQS_URL: {
-        Ref: "SQSQueue"
-      }
+      SQS_URL: '${cf:product-service-${self:provider.stage}.SQSQueueUrl}'
     },
-  },
-  resources: {
-    Resources: {
-      SQSQueue: {
-        Type: "AWS::SQS::Queue",
-        Properties: {
-          QueueName: 'catalogItemsQueue'
-        }
-      }
-    }
   },
   functions: {
     importProductsFile: {

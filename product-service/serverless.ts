@@ -30,8 +30,65 @@ const serverlessConfiguration: Serverless = {
       PG_PORT: process.env.PG_PORT,
       PG_DATABASE: process.env.PG_DATABASE,
       PG_USERNAME: process.env.PG_USERNAME,
-      PG_PASSWORD: process.env.PG_PASSWORD
+      PG_PASSWORD: process.env.PG_PASSWORD,
+      SNS_ARN: {
+        Ref: 'SNSTopic'
+      },
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: [{
+          'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
+        }]
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: {
+          Ref: 'SNSTopic'
+        }
+      }
+    ]
+  },
+  resources: {
+    Resources: {
+      SNSTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'createProductTopic'
+        }
+      },
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'catalogItemsQueue'
+        }
+      },
+      SNSSubscription: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'snstopicemail@mail.ru',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'SNSTopic'
+          }
+        }
+      }
+    },
+    Outputs: {
+      SQSQueueUrl: {
+        Value: {
+          Ref: 'catalogItemsQueue'
+        }
+      },
+      SQSQueueArn: {
+        Value: {
+          'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
+        }
+      }
+    }
   },
   functions: {
     getProductsList: {
@@ -69,7 +126,20 @@ const serverlessConfiguration: Serverless = {
           }
         }
       ]
-    }
+    },
+    catalogBatchProcess: {
+      handler: 'handler.catalogBatchProcess',
+      events: [
+        {
+          sqs: {
+            batchSize: 5,
+            arn: {
+              'Fn::GetAtt': ['catalogItemsQueue', 'Arn']
+            }
+          }
+        }
+      ]
+    },
   }
 }
 
