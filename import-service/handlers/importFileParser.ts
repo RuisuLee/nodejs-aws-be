@@ -1,11 +1,12 @@
 import { S3Event } from "aws-lambda";
-import { S3 } from "aws-sdk";
+import { S3, SQS } from "aws-sdk";
 import * as csv from 'csv-parser';
 
-const BUCKET = 'cake-bakery-app-import-service'
+const BUCKET = 'cake-bakery-app-import-service';
 
 export const importFileParser = async (event: S3Event, _context) => {
   const s3 = new S3({ region: 'eu-west-1' });
+  const sqs = new SQS({ region: 'eu-west-1' });
 
   await Promise.all(event.Records.map(async record => {
     const s3Stream = s3.getObject({
@@ -15,7 +16,17 @@ export const importFileParser = async (event: S3Event, _context) => {
 
     return await new Promise((resolve, reject) => {
       s3Stream.pipe(csv())
-      .on('data', (data) => { console.log(`file parser data: ${data}`) })
+      .on('data', (data) => {
+        console.log(`file parser data: ${JSON.stringify(data)}`);
+        sqs.sendMessage({
+          QueueUrl: process.env.SQS_URL,
+          MessageBody: JSON.stringify(data)
+        },
+        (err, data) => {
+          if (err) { console.log('SQS error: ', err)}
+          console.log('SQS send data: ', data);
+        })
+      })
       .on('end', async () => {
         console.log(`Start copy from ${BUCKET}/${record.s3.object.key}`);
 
