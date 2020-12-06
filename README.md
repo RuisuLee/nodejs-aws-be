@@ -25,3 +25,5 @@ insert into stocks (product_id, count) values
 ('c1bb9805-4c33-4fd9-840e-94c154e2650e', 8),
 ('245ec26a-a4ae-41b6-831b-471f6d95fc32', 2)
 ```
+
+Small change
